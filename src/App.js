@@ -1,11 +1,15 @@
-import { Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import Index from "./components/Index";
 
 import "./App.css";
 
 function App() {
   return (
     <main>
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<Index />} />
+      </Routes>
     </main>
   );
 }
