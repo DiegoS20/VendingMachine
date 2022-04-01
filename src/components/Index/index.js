@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
+
+import Header from "../Header";
+
 import getProducts from "../../services/getProducts";
+
+import "./index.scss";
 
 export default function Index() {
   const [products, setProducts] = useState(null);
@@ -10,5 +15,9 @@ export default function Index() {
     });
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 }
