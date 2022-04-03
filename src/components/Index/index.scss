@@ -1,1 +1,15 @@
+.vending-machine {
+  .main-title {
+    text-align: center;
+    margin: 50px;
+    font-size: 50px;
+  }
 
+  .cards {
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 50px;
+  }
+}
