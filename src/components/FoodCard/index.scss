@@ -1,0 +1,54 @@
+.food-card {
+  max-width: 300px;
+  background-color: #eadac0;
+  height: 350px;
+  border-radius: 5px;
+
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .thumbnail {
+    height: 70%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      height: 50%;
+      object-fit: scale-down;
+    }
+  }
+
+  .info {
+    text-align: center;
+    font-weight: bold;
+
+    .preparation-time {
+      font-size: 13px;
+    }
+  }
+
+  .prepare-btn {
+    width: 75%;
+    background-color: #fa8b69;
+    color: #fff;
+    margin: auto;
+    margin-top: 5px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
