@@ -3,13 +3,9 @@ import getStringTime from "../../helpers/getStringTime";
 import "./index.scss";
 import defaultImg from "./images/default.jpg";
 
-export default function FoodCard({
-  id,
-  name,
-  preparation_time,
-  thumbnail,
-  onPrepare,
-}) {
+export default function FoodCard({ food, onPrepare }) {
+  const { name, preparation_time, thumbnail } = food;
+
   function handleImageError(e) {
     e.target.src = defaultImg;
     e.target.title += " - image could not load";
@@ -34,9 +30,7 @@ export default function FoodCard({
       <div
         className="prepare-btn"
         onClick={() =>
-          typeof onPrepare == "function"
-            ? onPrepare(id, preparation_time)
-            : null
+          typeof onPrepare == "function" ? onPrepare(food) : null
         }
       >
         Prepare
