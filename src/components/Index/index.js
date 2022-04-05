@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Header from "../Header";
 import LateralMenu from "../LateralMenu";
 import Loading from "../Loading";
+import Error from "../Error";
 
 import getProducts from "../../services/getProducts";
 
@@ -13,14 +14,18 @@ import FoodCard from "../FoodCard";
 import FoodContext from "./FoodContext";
 
 export default function Index() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [foodQueue, setFoodQueue] = useState([]);
   const [foodDispatched, setFoodDispatched] = useState([]);
 
   useEffect(() => {
-    getProducts().then((res) => {
-      setProducts(res.data);
-    });
+    getProducts()
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        setProducts(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -66,8 +71,10 @@ export default function Index() {
     });
   }
 
-  return !products.length ? (
+  return products === null ? (
     <Loading />
+  ) : products === false ? (
+    <Error />
   ) : (
     <div className="vending-machine">
       <FoodContext.Provider
