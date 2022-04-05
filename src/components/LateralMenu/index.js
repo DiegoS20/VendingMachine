@@ -15,7 +15,7 @@ export default function LateralMenu() {
   }
 
   return (
-    <div className="lateral-menu active" ref={menuRef}>
+    <div className="lateral-menu" ref={menuRef}>
       <div className="open-icon" onClick={toggleMenu}>
         <img src={menuIcon} alt="Menu icon" />
       </div>
