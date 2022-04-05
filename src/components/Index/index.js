@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 import Header from "../Header";
 import LateralMenu from "../LateralMenu";
+import Loading from "../Loading";
 
 import getProducts from "../../services/getProducts";
 
@@ -22,6 +23,16 @@ export default function Index() {
     });
   }, []);
 
+  useEffect(() => {
+    if (foodDispatched.length) {
+      const item = foodDispatched[foodDispatched.length - 1];
+      const foodQueueSlice = foodQueue.slice();
+      const itemIndex = foodQueue.findIndex((food) => food.id === item.id);
+      foodQueueSlice.splice(itemIndex, 1);
+      setFoodQueue(foodQueueSlice);
+    }
+  }, [foodDispatched]);
+
   function handleFoodPrepare(food) {
     const foodQSlice = foodQueue.slice();
     let foodSlice = { ...food };
@@ -35,7 +46,6 @@ export default function Index() {
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
       draggable: true,
       progress: undefined,
     });
@@ -45,26 +55,20 @@ export default function Index() {
     const dispatchedSlice = foodDispatched.slice();
     dispatchedSlice.push(item);
     setFoodDispatched(dispatchedSlice);
-    removeFromQueue(item);
+
     toast.success(`Your ${item.name} is ready!`, {
       position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
       draggable: true,
       progress: undefined,
     });
   }
 
-  function removeFromQueue(item) {
-    const foodQueueSlice = foodQueue.slice();
-    const itemIndex = foodQueue.findIndex((food) => food.id === item.id);
-    foodQueueSlice.splice(itemIndex, 1);
-    setFoodQueue(foodQueueSlice);
-  }
-
-  return (
+  return !products.length ? (
+    <Loading />
+  ) : (
     <div className="vending-machine">
       <FoodContext.Provider
         value={{
@@ -76,7 +80,7 @@ export default function Index() {
         <LateralMenu />
       </FoodContext.Provider>
       <Header />
-      <h1 className="main-title">Bienvenido usuario!</h1>
+      <h1 className="main-title">Welcome user!</h1>
       <div className="cards">
         {products.map((food, i) => (
           <FoodCard key={i} food={food} onPrepare={handleFoodPrepare} />

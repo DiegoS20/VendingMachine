@@ -19,7 +19,7 @@ export default function ItemsSelectedItem({ item }) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [item]);
 
   function subtractTime() {
     const now = new Date();
