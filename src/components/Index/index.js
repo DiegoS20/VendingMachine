@@ -17,6 +17,7 @@ export default function Index() {
   const [products, setProducts] = useState(null);
   const [foodQueue, setFoodQueue] = useState([]);
   const [foodDispatched, setFoodDispatched] = useState([]);
+  const [lastDispatched, setLastDispatched] = useState(null);
 
   useEffect(() => {
     getProducts()
@@ -38,6 +39,23 @@ export default function Index() {
     }
   }, [foodDispatched]);
 
+  useEffect(() => {
+    if (lastDispatched !== null) {
+      const dispatchedSlice = foodDispatched.slice();
+      dispatchedSlice.push(lastDispatched);
+      setFoodDispatched(dispatchedSlice);
+
+      toast.success(`Your ${lastDispatched.name} is ready!`, {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [lastDispatched]);
+
   function handleFoodPrepare(food) {
     const foodQSlice = foodQueue.slice();
     let foodSlice = { ...food };
@@ -56,21 +74,6 @@ export default function Index() {
     });
   }
 
-  function addToDispatched(item) {
-    const dispatchedSlice = foodDispatched.slice();
-    dispatchedSlice.push(item);
-    setFoodDispatched(dispatchedSlice);
-
-    toast.success(`Your ${item.name} is ready!`, {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      draggable: true,
-      progress: undefined,
-    });
-  }
-
   return products === null ? (
     <Loading />
   ) : products === false ? (
@@ -79,7 +82,7 @@ export default function Index() {
     <div className="vending-machine">
       <FoodContext.Provider
         value={{
-          addToDispatched,
+          addToDispatched: setLastDispatched,
           foodQueue,
           foodDispatched,
         }}
