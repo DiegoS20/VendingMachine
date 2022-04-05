@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import Header from "../Header";
 import LateralMenu from "../LateralMenu";
@@ -29,6 +30,15 @@ export default function Index() {
       date.getTime() + foodSlice.preparation_time * 1000;
     foodQSlice.push(foodSlice);
     setFoodQueue(foodQSlice);
+    toast.info(`Your ${food.name} is being prepared!`, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   function addToDispatched(item) {
@@ -36,6 +46,15 @@ export default function Index() {
     dispatchedSlice.push(item);
     setFoodDispatched(dispatchedSlice);
     removeFromQueue(item);
+    toast.success(`Your ${item.name} is ready!`, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   function removeFromQueue(item) {
