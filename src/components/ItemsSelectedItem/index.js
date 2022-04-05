@@ -13,15 +13,25 @@ export default function ItemsSelectedItem({ item }) {
 
   useEffect(() => {
     subtractTime();
-    setInterval(subtractTime, 1000);
+    const interval = setInterval(() => {
+      const itFinished = subtractTime();
+      if (itFinished) clearInterval(interval);
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   function subtractTime() {
     const now = new Date();
     const finalDate = new Date(item.completion_time);
     const difference = (finalDate - now) / 1000;
-    if (difference < 0) addToDispatched(item);
-    else setTime(Math.floor(difference));
+    if (difference < 0) {
+      addToDispatched(item);
+      return true;
+    } else {
+      setTime(Math.floor(difference));
+      return false;
+    }
   }
 
   return (
